@@ -5,3 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Post.destroy_all()
+
+50.times do
+  created_at = Faker::Date.backward(365)
+  Post.create({
+    title: Faker::Games::Witcher.witcher,
+    body: Faker::Games::Witcher.quote,
+    created_at: created_at,
+    updated_at: created_at
+  })
+end
+
+puts Cowsay.say("Created 50 posts!", :frogs)
