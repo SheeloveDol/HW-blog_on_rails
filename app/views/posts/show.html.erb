@@ -1,7 +1,30 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.body %></p>
+<div class="container">
+  <h1><%= @post.title %></h1>
+  <p><%= @post.body %></p>
 
-<p>Posted <%= time_ago_in_words(@post.created_at) %> ago</p>
+  <p>Posted <%= time_ago_in_words(@post.created_at) %> ago</p>
 
-<%= link_to "Edit", edit_post_path(@post), class: "btn btn-outline-primary" %>
-<%= link_to "Delete", post_path, method: :delete, data: "Are you sure you want to delete this post?", class: "btn btn-outline-primary" %>
+  <%= link_to "Edit", edit_post_path(@post), class: "btn btn-outline-primary" %>
+  <%= link_to "Delete", post_path, method: :delete, data: "Are you sure you want to delete this post?", class: "btn btn-outline-primary" %>
+
+  <br>
+  <br>
+
+  <%= form_with(model: [@post, @comment], local: true) do |f| %>
+    <div>
+      <%= f.label :comment %>
+      <%= f.text_area :body, placeholder: "What's on your mind?", class: "form-control col" %>
+      <%= f.submit :Submit, class: 'btn btn-outline-primary btn-sm mt-2'%>
+    </div><br>
+  <% end %>
+
+  <% @post.comments.each do |comment| %>
+      <div>
+          <div><%= comment.body %></div>
+            <small>
+              Commented <%= time_ago_in_words(comment.created_at) %> ago  
+              <%= link_to "Delete", post_comment_path(@post,comment), method: :delete,data: {confirm: "Are you sure?"}, style: "color:blue" %>
+            </small>
+      </div><br>
+    <% end %>
+</div>
