@@ -1,0 +1,27 @@
+<main class="container">
+  <% if @post.errors.any? %>
+
+    <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li> <%= msg %> </li>
+      <% end %>
+    </ul>
+
+  <% end %>
+
+  <%= form_with model: @post, local: true do |f| %>
+    <div>
+      <%= f.label :title %> <br>
+      <div class="input-group">
+        <%= f.text_field :title, class: "form-control", required: true  %>
+      </div>
+    </div><br>
+    <div>
+      <%= f.label :body %> <br>
+      <div class="input-group">
+        <%= f.text_area :body, size: "50x3", class: "form-control", required: true %>
+      </div>
+    </div><br>
+    <%= f.submit class: "btn btn-outline-primary" %>
+  <% end %>
+</main>
