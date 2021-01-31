@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
   def index 
     @posts = Post.all
   end
@@ -7,19 +10,16 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-  def show 
-    @post = Post.find params[:id] 
+  def show  
     @comment = Comment.new
   end
 
   def edit 
-    @post = Post.find params[:id]
   end
 
   def create 
     # Whitelisting the params 
-    post_params = params.require(:post).permit(:title, :body) 
-    @post = Post.new post_params
+    @post = Post.new post_params_whitelisting #<--refactored
     if @post.save 
       # render plain: "You've created a new product."
       flash[:notice] = "Post created successfully"
@@ -30,9 +30,7 @@ class PostsController < ApplicationController
   end
 
   def update 
-    post_params = params.require(:post).permit(:title, :body) 
-    @post = Post.find params[:id] 
-    if @post.update post_params 
+    if @post.update post_params_whitelisting #<--refactored
       flash[:notice] = "Post was successfully updated"
       redirect_to post_path
     else
@@ -41,9 +39,19 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find params[:id] 
     @post.destroy
     redirect_to posts_path 
+  end
+
+
+  private 
+  
+  def set_post
+    @post = Post.find params[:id]
+  end
+
+  def post_params_whitelisting
+    post_params = params.require(:post).permit(:title, :body) 
   end
 
 end

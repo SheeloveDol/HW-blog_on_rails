@@ -10,8 +10,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="container">
     <%= render 'layouts/navigation' %>
+
+    <%= flash[:notice] || flash[:alert] %>
     <%= yield %>
   </body>
 </html>
