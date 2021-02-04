@@ -9,7 +9,7 @@
     </li>
     <% if user_signed_in? %>
       <li class="nav-item">
-        <%= link_to current_user.name, sessions_path, method: :delete, data: {confirm: 'Are you sure you want to logout?'}, class: "nav-link" %>
+        <%= link_to current_user.name, session_path, method: :delete, data: {confirm: 'Are you sure you want to logout?'}, class: "nav-link" %>
       </li>
       <% else %>
       <li class="nav-item">
